@@ -16,6 +16,8 @@ Python dependencies are pinned in [`requirements.txt`](requirements.txt):
 | SQLAlchemy | 2.0.51 | ORM |
 | PyMySQL | 1.2.0 | MySQL driver |
 | python-dotenv | 1.2.2 | Loads `.env` configuration |
+| pytest | 9.1.1 | Test runner (dev) |
+| httpx | 0.28.1 | Test client transport (dev) |
 
 ## Setup
 
@@ -112,4 +114,19 @@ Delete a merchandise item:
 
 ```bash
 curl -X DELETE http://localhost:8000/api/merchandise/1
+```
+
+## Testing
+
+Endpoint tests live in the [`tests/`](tests/) folder and run against a
+**dedicated MySQL test database** (`kelontong_test` by default) so your real
+`kelontong` data is never touched. The test database is created automatically
+if it does not exist, and each test runs against a fresh schema.
+
+Tests use the same `DB_*` variables (and `.env`) as the app. Override the test
+database name with `TEST_DB_NAME` if needed.
+
+```bash
+# MySQL must be running and reachable with your DB_* credentials
+pytest
 ```

@@ -15,7 +15,9 @@ DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "3306")
 DB_NAME = os.getenv("DB_NAME", "kelontong")
 
-DATABASE_URL = (
+# A full DATABASE_URL takes precedence (e.g. to point tests at a separate test
+# database); otherwise build the MySQL URL from the individual DB_* variables.
+DATABASE_URL = os.getenv("DATABASE_URL") or (
     f"mysql+pymysql://{DB_USER}:{quote_plus(DB_PASSWORD)}"
     f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
