@@ -69,3 +69,47 @@ All merchandise routes are prefixed with `/api`.
 | GET | `/api/merchandise/search/` | Search by `name` and/or `category` |
 | PUT | `/api/merchandise/{id}` | Update a merchandise item |
 | DELETE | `/api/merchandise/{id}` | Delete a merchandise item |
+
+## Example requests
+
+Assuming the server is running at `http://localhost:8000`.
+
+Create a merchandise item:
+
+```bash
+curl -X POST http://localhost:8000/api/merchandises \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Indomie Goreng", "category_id": 1, "price": 3000, "stock": 50}'
+```
+
+List all merchandise:
+
+```bash
+curl http://localhost:8000/api/merchandise
+```
+
+Get a merchandise item by id:
+
+```bash
+curl http://localhost:8000/api/merchandise/1
+```
+
+Search by name and/or category:
+
+```bash
+curl "http://localhost:8000/api/merchandise/search/?name=Indomie&category=1"
+```
+
+Update a merchandise item:
+
+```bash
+curl -X PUT http://localhost:8000/api/merchandise/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Indomie Goreng Jumbo", "category_id": 1, "price": 3500, "stock": 40}'
+```
+
+Delete a merchandise item:
+
+```bash
+curl -X DELETE http://localhost:8000/api/merchandise/1
+```
