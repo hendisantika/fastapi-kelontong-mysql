@@ -30,3 +30,13 @@ async def create_merchandise(merchandise: MerchandiseBase, db: db_dependency):
 async def get_merchandises(db: db_dependency):
     merchs = db.query(models.Merchandise).all()
     return merchs
+
+
+@router.get("/merchandise/{id}", status_code=status.HTTP_200_OK)
+async def get_merchandise(id: int, db: db_dependency):
+    merch = db.query(models.Merchandise).filter(models.Merchandise.id == id).first()
+
+    if merch is None:
+        raise HTTPException(status_code=404, detail="Merchandise not found")
+
+    return merch
