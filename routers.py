@@ -68,3 +68,24 @@ async def delete_merchandise(id: int, db: db_dependency):
     db.commit()
 
     return {"message": "Merchandise deleted"}
+
+
+@router.put("/merchandise/{id}", status_code=status.HTTP_200_OK)
+async def update_merchandise(id: int, merchandise: MerchandiseBase, db: db_dependency):
+    m = models.Merchandise
+
+    merch = db.query(m).filter(m.id == id).first()
+
+    if merch is None:
+        raise HTTPException(status_code=404, detail="Merchandise not found")
+
+    db_merch = m(**merchandise.dict())
+    db.query(m).filter(m.id == id).update({
+        m.name: db_merch.name,
+        m.category_id: db_merch.category_id,
+        m.price: db_merch.price,
+        m.stock: db_merch.stock
+    }, synchronize_session=False)
+    db.commit()
+
+    return {"message": "Merchandise updated"}
