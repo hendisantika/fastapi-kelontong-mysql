@@ -15,3 +15,12 @@ class MerchandiseBase(BaseModel):
 
 
 db_dependency = Annotated[Session, Depends(get_db)]
+
+
+@router.post("/merchandises", status_code=status.HTTP_201_CREATED)
+async def create_merchandise(merchandise: MerchandiseBase, db: db_dependency):
+    db_merch = models.Merchandise(**merchandise.dict())
+    db.add(db_merch)
+    db.commit()
+
+    return {"message": "New data created"}
