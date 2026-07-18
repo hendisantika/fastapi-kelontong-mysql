@@ -1,7 +1,12 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from pydantic import BaseModel
+from sqlalchemy import or_
+from sqlalchemy.orm import Session
 
 import models
-from database import engine
+from database import engine, get_db
 
 router = APIRouter()
 models.Base.metadata.create_all(bind=engine)
