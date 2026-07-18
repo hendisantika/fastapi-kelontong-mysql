@@ -24,3 +24,9 @@ async def create_merchandise(merchandise: MerchandiseBase, db: db_dependency):
     db.commit()
 
     return {"message": "New data created"}
+
+
+@router.get("/merchandise", status_code=status.HTTP_200_OK)
+async def get_merchandises(db: db_dependency):
+    merchs = db.query(models.Merchandise).all()
+    return merchs
