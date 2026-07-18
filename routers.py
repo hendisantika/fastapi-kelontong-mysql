@@ -55,3 +55,16 @@ async def get_merchandise_by_search(db: db_dependency, name: str = Query(default
     ).all()
 
     return merchs
+
+
+@router.delete("/merchandise/{id}", status_code=status.HTTP_200_OK)
+async def delete_merchandise(id: int, db: db_dependency):
+    merch = db.query(models.Merchandise).filter(models.Merchandise.id == id).first()
+
+    if merch is None:
+        raise HTTPException(status_code=404, detail="Merchandise not found")
+
+    db.delete(merch)
+    db.commit()
+
+    return {"message": "Merchandise deleted"}
