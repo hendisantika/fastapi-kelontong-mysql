@@ -40,3 +40,18 @@ async def get_merchandise(id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="Merchandise not found")
 
     return merch
+
+
+@router.get("/merchandise/search/", status_code=status.HTTP_200_OK)
+async def get_merchandise_by_search(db: db_dependency, name: str = Query(default=None),
+                                    category: int = Query(default=None)):
+    m = models.Merchandise
+
+    merchs = db.query(m).filter(
+        or_(
+            m.name.like(f"%{name}%"),
+            m.category_id == category,
+        )
+    ).all()
+
+    return merchs
