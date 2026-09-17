@@ -1,5 +1,5 @@
 PyMySQL==1.2.0
-SQLAlchemy==2.0.51
+SQLAlchemy==2.0.53
 fastapi==0.139.2
 httpx==0.28.1
 pytest==9.1.1
